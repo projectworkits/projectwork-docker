@@ -2,7 +2,7 @@ FROM nginx:alpine3.23
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# COPY ./frontend /frontend
+#COPY ./frontend /frontend
 
 RUN apk update && apk add git && git clone -b frontendMain https://github.com/MandichRiccardoITS/AtelierDoisneau.git frontend
 

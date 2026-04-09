@@ -23,7 +23,12 @@ services:
   # SERVIZIO 2 — ASP.NET Core
   # ───────────────────────────────────────────
   aspnet:
-    build: ./aspNet
+    build:
+      context: ./aspNet
+      args:
+        - CERT_PASSWORD=${CERT_PASSWORD}
+        #la password per la creazione e l'uso del certificato di ASP.NET
+    
     container_name: aspnet_container
     restart: unless-stopped
 
@@ -32,7 +37,9 @@ services:
  
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASP_MODE}
-      ASPNETCORE_URLS: http://+:3000
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /cert/aspnet.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERT_PASSWORD}
+      ASPNETCORE_URLS: https://+:3000
       ConnectionStrings__db: Host=postgres;Database=projectWork;Username=${DB_USER};Password=${DB_PASSWORD}
   
     depends_on:

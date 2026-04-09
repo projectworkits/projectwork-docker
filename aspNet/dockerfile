@@ -1,6 +1,14 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 
+ARG CERT_PASSWORD
+
 RUN apt-get update && apt-get install -y git
+
+RUN mkdir -p /cert && chown app:app /cert
+
+RUN openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -subj "/CN=localhost"
+RUN openssl pkcs12 -export -out cert/aspnet.pfx -inkey key.pem -in cert.pem -passout pass:${CERT_PASSWORD}
+#è quasi necessaria una password per kestrel, altrimenti si incazza
 
 RUN git clone -b backendMain https://github.com/MandichRiccardoITS/AtelierDoisneau.git fullBranch
 
