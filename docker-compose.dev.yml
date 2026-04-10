@@ -1,0 +1,84 @@
+services:
+ 
+  # ───────────────────────────────────────────
+  # SERVIZIO 1 — Nginx (web server statico)
+  # ───────────────────────────────────────────
+  nginx:
+    build: ./nginx
+    container_name: nginx_container
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "443:443"
+ 
+    depends_on:
+      - aspnet
+ 
+    labels:
+      description: "Nginx web server / reverse proxy"
+ 
+ 
+  # ───────────────────────────────────────────
+  # SERVIZIO 2 — ASP.NET Core
+  # ───────────────────────────────────────────
+  aspnet:
+    build:
+      context: ./aspNet
+      args:
+        - CERT_PASSWORD=${CERT_PASSWORD}
+        #la password per la creazione e l'uso del certificato di ASP.NET
+    
+    container_name: aspnet_container
+    restart: unless-stopped
+
+    ports:
+      - "3001:3001"
+ 
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASP_MODE}
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /cert/aspnet.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERT_PASSWORD}
+      ASPNETCORE_URLS: https://+:3000
+      ConnectionStrings__db: Host=postgres;Database=projectWork;Username=${DB_USER};Password=${DB_PASSWORD}
+  
+    depends_on:
+      postgres:
+        condition: service_healthy
+ 
+    labels:
+      description: "ASP.NET Core backend"
+ 
+ 
+  # ───────────────────────────────────────────
+  # SERVIZIO 3 — PostgreSQL
+  # ───────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres_container
+    restart: unless-stopped
+
+    ports:
+      - "5433:5432"
+ 
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: projectWork
+      PGPORT: 5432
+ 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      
+      #viene eseguito il file solo al primo avvio in assoluto del container dopo la sua creazione
+      - ./postgres/script1.sql:/docker-entrypoint-initdb.d/script1.sql
+ 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d projectWork"]
+      start_period: 5s
+      interval: 5s
+      timeout: 3s
+      retries: 5
+   
+volumes:
+  postgres_data:
