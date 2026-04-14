@@ -132,3 +132,10 @@ Struttura dell'azienda:
     - state:enum(["booked", "sold", "available"])
     - price:decimal
     - bookedBy:int,fk(users),nullable
+
+- [ ] sessions
+    - id:int,pk
+    - token:uuid
+    - createdAt:timestamptz
+    - expiresAt:timestamptz
+    - idUser:int,fk(users)
