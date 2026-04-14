@@ -104,7 +104,7 @@ Struttura dell'azienda:
 # database
 
 - [ ] products
-    - id:int,pk
+    - product_id:int,pk
     - available:int
     - booked:int
     - sold:int
@@ -113,29 +113,29 @@ Struttura dell'azienda:
     - price:decimal
 
 - [ ] users
-    - id:int,pk
+    - user_id:int,pk
     - username:string(50),unique (A-9, no space or special character)
     - password:string(8-60),unique (A-9, no space)
     - email:string(100),unique (^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$)
-    - verifedAt:timestamp,defaultNull
+    - verified:timestamp,defaultNull
     - admin:tinyInt(1)
     - collaborator:tinyInt(1)
 
 - [ ] photos
-    - id:int,pk
+    - photo_id:int,pk
     - path:string(255),unique
     - title:string(100),unique
-    - originalTitle:string(100),unique
+    - original_title:string(100),unique
     - year:short
     - place:string(100)
     - description:text
     - state:enum(["booked", "sold", "available"])
     - price:decimal
-    - bookedBy:int,fk(users),nullable
+    - booked_by:int,fk(users),nullable
 
 - [ ] sessions
-    - id:int,pk
-    - token:uuid
-    - createdAt:timestamptz
-    - expiresAt:timestamptz
-    - idUser:int,fk(users)
+    - session_id:int,pk
+    - token:varchar(44) perché sha256 + base64 = 44 byte
+    - created:timestamptz DEFAULT NOW()
+    - expires:timestamptz DEFAULT NOW() + interval '7 days'
+    - user_id:int,fk(users)
