@@ -41,7 +41,8 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERT_PASSWORD}
       ASPNETCORE_URLS: https://+:3000
       ConnectionStrings__db: Host=postgres;Database=projectWork;Username=${DB_USER};Password=${DB_PASSWORD}
-  
+      jwtSecret: ${JWTSECRET}
+      
     depends_on:
       postgres:
         condition: service_healthy
