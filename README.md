@@ -23,10 +23,37 @@ Struttura dell'azienda:
 
 ### necessarie
 
+#### DB
+
+##### products
+- create : /api/products
+- read (single and list) : /api/products[/id/]
+//tra quadre la parte che cambia in base al record singolo o alla lista
+- update : /api/products/id
+- delete : /api/products/id
+
+##### photos
+- create : /api/photos
+- read (single and list) : /api/photos[/id/]
+//tra quadre la parte che cambia in base al record singolo o alla lista
+- update : /api/photos/id
+- delete : /api/photos/id
+
+##### users
+- create : /api/users
+- read (single and list) : /api/users[/id/]
+//tra quadre la parte che cambia in base al record singolo o alla lista
+- update : /api/users/id
+- delete : /api/users/id
+
 ### honeypot
 
-## pagine
+- /login : casuale true o false (quello vero è logon)
+- /signup
 
+## pagine
+- [ ] login (/logon)
+- [ ] signup (/register)
 - [ ] azienda
     - guardare file azienda.html creato da claude
 - [ ] landing page: home
