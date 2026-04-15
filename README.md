@@ -114,7 +114,8 @@ Struttura dell'azienda:
 - [ ] users
     - user_id:int,pk
     - username:string(50),unique (A-9, no space or special character)
-    - password:string(8-60),unique (A-9, no space)
+    - password_salt:string(?-50)
+    - password_hash:string(?-50)
     - email:string(100),unique (^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$)
     - verified:timestamp,defaultNull
     - admin:tinyInt(1)

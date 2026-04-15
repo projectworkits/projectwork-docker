@@ -12,7 +12,8 @@ CREATE TYPE photo_state AS ENUM ('booked', 'sold', 'available');
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(60) UNIQUE NOT NULL,
+    password_salt VARCHAR(50) NOT NULL, --non deve essere unique
+    password_hash VARCHAR(50) NOT NULL, --non deve essere unique
     email VARCHAR(100) UNIQUE NOT NULL,
     verified TIMESTAMP DEFAULT NULL,
     admin SMALLINT NOT NULL DEFAULT 0,
