@@ -48,12 +48,11 @@ Struttura dell'azienda:
 
 ### honeypot
 
-- /login : casuale true o false (quello vero è logon)
 - /signup
 
 ## pagine
-- [ ] login (/logon)
-- [ ] signup (/register)
+- [ ] login
+- [ ] signup (/register come link per arrivarci)
 - [ ] azienda
     - guardare file azienda.html creato da claude
 - [ ] landing page: home
