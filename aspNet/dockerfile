@@ -11,6 +11,6 @@ RUN openssl pkcs12 -export -out cert/aspnet.pfx -inkey key.pem -in cert.pem -pas
 #è quasi necessaria una password per kestrel, altrimenti si incazza
 
 # necessario per far riscaricare il git sempre
-ENTRYPOINT  git clone -b backendMain https://github.com/MandichRiccardoITS/AtelierDoisneau.git fullBranch && \
-            chmod +x /fullBranch/compiled/projectWork && \
-            /fullBranch/compiled/projectWork
+ENTRYPOINT  git clone https://github.com/projectworkits/projectwork-backend.git backend && \
+            chmod +x /backend/compiled/projectWork && \
+            /backend/compiled/projectWork
