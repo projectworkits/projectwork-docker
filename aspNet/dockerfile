@@ -10,8 +10,7 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -da
 RUN openssl pkcs12 -export -out cert/aspnet.pfx -inkey key.pem -in cert.pem -passout pass:${CERT_PASSWORD}
 #è quasi necessaria una password per kestrel, altrimenti si incazza
 
-RUN git clone -b backendMain https://github.com/MandichRiccardoITS/AtelierDoisneau.git fullBranch
-
-RUN chmod +x /fullBranch/compiled/projectWork
-
-ENTRYPOINT ["/fullBranch/compiled/projectWork"]
+# necessario per far riscaricare il git sempre
+ENTRYPOINT  git clone -b backendMain https://github.com/MandichRiccardoITS/AtelierDoisneau.git fullBranch && \
+            chmod +x /fullBranch/compiled/projectWork && \
+            /fullBranch/compiled/projectWork

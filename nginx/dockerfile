@@ -5,13 +5,11 @@ COPY nginx.conf /etc/nginx/nginx.conf
 #COPY ./frontend /frontend
 
 RUN apk update && apk add git
-RUN git clone https://github.com/MandichRiccardoITS/AtelierDoisneau.git frontend
-RUN cd frontend && git switch frontendMain && git pull origin frontendMain
 
 RUN apk update && apk add openssl
 RUN mkdir cert
 RUN openssl req -x509 -newkey rsa:4096 -keyout cert/priv.key -out cert/cert.crt -sha256 -days 365 -nodes -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
 
-RUN chown -R nginx:nginx /frontend
-
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT  git clone -b frontendMain https://github.com/MandichRiccardoITS/AtelierDoisneau.git frontend && \
+            chown -R nginx:nginx /frontend && \
+            nginx -g "daemon off;"
