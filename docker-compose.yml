@@ -11,6 +11,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    
+    volumes:
+      - photosVolume:/photos
  
     depends_on:
       - aspnet
@@ -31,9 +34,6 @@ services:
     
     container_name: aspnet_container
     restart: unless-stopped
-
-    ports:
-      - "3001:3001"
  
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASP_MODE}
@@ -42,6 +42,9 @@ services:
       ASPNETCORE_URLS: https://+:3000
       ConnectionStrings__db: Host=postgres;Database=projectWork;Username=${DB_USER};Password=${DB_PASSWORD}
       jwtSecret: ${JWTSECRET}
+    
+    volumes:
+      - photosVolume:/photos
       
     depends_on:
       postgres:
@@ -80,3 +83,5 @@ services:
    
 volumes:
   postgres_data:
+  photosVolume:
+    driver: local

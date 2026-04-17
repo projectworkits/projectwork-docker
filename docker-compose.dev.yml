@@ -34,9 +34,6 @@ services:
     
     container_name: aspnet_container
     restart: unless-stopped
-
-    ports:
-      - "3001:3001"
  
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASP_MODE}
