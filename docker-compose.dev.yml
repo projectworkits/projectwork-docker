@@ -13,7 +13,7 @@ services:
       - "443:443"
 
     volumes:
-    - photosVolume:/photos:ro
+    - photosVolume:/frontend/photos:ro
  
     depends_on:
       - aspnet
@@ -47,7 +47,7 @@ services:
       jwtSecret: ${JWTSECRET}
     
     volumes:
-      - photosVolume:/photos
+      - photosVolume:/frontend/photos
   
     depends_on:
       postgres:
