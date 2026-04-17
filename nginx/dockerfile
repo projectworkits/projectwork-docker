@@ -11,5 +11,5 @@ RUN mkdir cert
 RUN openssl req -x509 -newkey rsa:4096 -keyout cert/priv.key -out cert/cert.crt -sha256 -days 365 -nodes -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
 
 ENTRYPOINT  git clone https://github.com/projectworkits/projectwork-frontend.git frontend/projectWork && \
-            mkdir -d frontend/photos && \
+            mkdir -p frontend/photos && \
             nginx -g "daemon off;"
