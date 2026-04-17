@@ -6,12 +6,12 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 RUN apk update && apk add git
 
-RUN mkdir -p frontend/photos
-
 RUN apk update && apk add openssl
 RUN mkdir cert
 RUN openssl req -x509 -newkey rsa:4096 -keyout cert/priv.key -out cert/cert.crt -sha256 -days 365 -nodes -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
 
-ENTRYPOINT  git clone https://github.com/projectworkits/projectwork-frontend.git frontend/projectWork && \
+RUN mkdir -p frontend/photos
+
+ENTRYPOINT  git clone -b tmp https://github.com/projectworkits/projectwork-frontend.git frontend/projectWork && \
             chown -R nginx:nginx /frontend/projectWork && \
             nginx -g "daemon off;"
