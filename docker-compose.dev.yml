@@ -33,7 +33,7 @@ services:
         #la password per la creazione e l'uso del certificato di ASP.NET
     
     ports:
-      - "30001:3001"
+      - "3001:3001"
     
     container_name: aspnet_container
     restart: unless-stopped
