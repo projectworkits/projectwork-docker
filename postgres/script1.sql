@@ -26,7 +26,7 @@ CREATE TABLE sessions (
     token varchar(44) NOT NULL,
     created TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     expires TIMESTAMPTZ NOT NULL DEFAULT NOW() + interval '7 days',
-    user_id INT NOT NULL REFERENCES users(user_id)
+    user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- Create products table
