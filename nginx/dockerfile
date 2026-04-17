@@ -12,5 +12,5 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout cert/priv.key -out cert/cert.crt 
 
 ENTRYPOINT  git clone https://github.com/projectworkits/projectwork-frontend.git frontend/projectWork && \
             mkdir -p frontend/photos && \
-            && chown -R nginx:nginx /frontend \
+            chown -R nginx:nginx /frontend && \
             nginx -g "daemon off;"
