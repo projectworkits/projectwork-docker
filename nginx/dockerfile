@@ -6,7 +6,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 RUN apk update && apk add git
 
-RUN mkdir -p /photos
+RUN mkdir -p frontend/photos
 
 RUN apk update && apk add openssl
 RUN mkdir cert
