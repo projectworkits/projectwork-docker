@@ -33,11 +33,25 @@ Struttura dell'azienda:
 
 ##### photos
 
-- /api/photos/
-- 
-- 
-- 
-- 
+- `/api/photos/` (get)\
+    restituisce `Ok(200)` con un array di oggetti `Image` che è la lista di tutte le foto
+
+- `/api/photos/{id}` (get)\
+    restituisce `Ok(200)` con un oggetto `Image` oppure `NotFound(404)`
+
+- `/api/photos/upload` (post)\
+    richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
+    prende nel body un oggetto di tipo `Image` con tutti i suoi campi e un campo `photo` con il file\
+    restituisce `Created(201)` oppure `BadRequest(400)` se i dati non ci sono
+
+- `/api/photos/` (put)\
+    richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
+    prende nel body un oggetto di tipo `Image` con tutti i suoi campi\
+    restituisce `NoContent(204)` se andato a buon fine, oppure `NotFound(404)`
+
+- `/api/photos/{id}` (delete)\
+    richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
+    restituisce `NoContent(204)` se ha successo, `NotFound(404)` se non trova la foto
 
 ##### users
 
