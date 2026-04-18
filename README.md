@@ -64,7 +64,11 @@ Struttura dell'azienda:
     <span style="color:red">richiede il login per funzionare</span>, dunque potrebbe tornare `Unauthorized(401)`
     prende nel body un oggetto di tipo `User` con tutti i suoi campi
     restituisce `NoContent(204)` se andato a buon fine, oppure `NotFound(404)`
-- 
+    <br>
+    
+- /api/users/user/{id} (delete)
+    <span style="color:red">richiede il login per funzionare</span>, dunque potrebbe tornare `Unauthorized(401)`
+    restituisce `NoContent(204)` se ha successo, `NotFound(404)` se non trova lo user, `Unauthorized(401)` se si prova a cancellare l'admin
 
 ### honeypot
 
