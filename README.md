@@ -27,7 +27,6 @@ Struttura dell'azienda:
 
 ##### products
 - create : /api/products
-- read (single and list) : /api/products[/id/]
 //tra quadre la parte che cambia in base al record singolo o alla lista
 - update : /api/products/id
 - delete : /api/products/id
@@ -40,11 +39,32 @@ Struttura dell'azienda:
 - delete : /api/photos/id
 
 ##### users
-- create : /api/users
-- read (single and list) : /api/users[/id/]
-//tra quadre la parte che cambia in base al record singolo o alla lista
-- update : /api/users/id
-- delete : /api/users/id
+
+- /api/users/register (post)
+    prende campi nel body username, password, email
+    restituisce `Created(201)` oppure `BadRequest(400)` se i dati non ci sono
+    <br>
+
+- /api/users/user (get)
+    verifica che chi invia la richiesta abbia fatto il login
+    restituisce `Ok(200)` con oggetto `User` oppure `Unauthorized(401)` se non ha fatto il login
+    <br>
+
+- /api/users/users (get)
+    <span style="color:red">richiede il login per funzionare</span>, dunque potrebbe tornare `Unauthorized(401)`
+    restituisce `Ok(200)` con un array di oggetti `User` che è la lista di tutti gli utenti
+    <br>
+
+- /api/users/user/{id} (get)
+    <span style="color:red">richiede il login per funzionare</span>, dunque potrebbe tornare `Unauthorized(401)`
+    restituisce `Ok(200)` con un oggetto `User` oppure `NotFound(404)`
+    <br>
+
+- /api/users/user (put)
+    <span style="color:red">richiede il login per funzionare</span>, dunque potrebbe tornare `Unauthorized(401)`
+    prende nel body un oggetto di tipo `User` con tutti i suoi campi
+    restituisce `NoContent(204)` se andato a buon fine, oppure `NotFound(404)`
+- 
 
 ### honeypot
 
