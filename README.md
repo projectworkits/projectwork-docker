@@ -42,24 +42,24 @@ Struttura dell'azienda:
 
 - /api/users/register (post)\
     prende campi nel body username, password, email\
-    restituisce `Created(201)` oppure `BadRequest(400)` se i dati non ci sono\
+    restituisce `Created(201)` oppure `BadRequest(400)` se i dati non ci sono
 
 - /api/users/user (get)\
     verifica che chi invia la richiesta abbia fatto il login\
-    restituisce `Ok(200)` con oggetto `User` oppure `Unauthorized(401)` se non ha fatto il login\
+    restituisce `Ok(200)` con oggetto `User` oppure `Unauthorized(401)` se non ha fatto il login
 
 - /api/users/users (get)\
     richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
-    restituisce `Ok(200)` con un array di oggetti `User` che è la lista di tutti gli utenti\
+    restituisce `Ok(200)` con un array di oggetti `User` che è la lista di tutti gli utenti
 
 - /api/users/user/{id} (get)\
     richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
-    restituisce `Ok(200)` con un oggetto `User` oppure `NotFound(404)`\
+    restituisce `Ok(200)` con un oggetto `User` oppure `NotFound(404)`
 
 - /api/users/user (put)\
     richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
     prende nel body un oggetto di tipo `User` con tutti i suoi campi\
-    restituisce `NoContent(204)` se andato a buon fine, oppure `NotFound(404)`\
+    restituisce `NoContent(204)` se andato a buon fine, oppure `NotFound(404)`
 
 - /api/users/user/{id} (delete)\
     richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
