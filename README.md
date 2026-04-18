@@ -42,6 +42,7 @@ Struttura dell'azienda:
 - `/api/photos/upload` (post)\
     richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
     prende nel body un oggetto di tipo `Image` con tutti i suoi campi e un campo `photo` con il file\
+    warning: il campo state accetta come parametri 0 o available, 1 o booked, 2 o sold (stringhe da testare)\
     restituisce `Created(201)` oppure `BadRequest(400)` se i dati non ci sono
 
 - `/api/photos/` (put)\
