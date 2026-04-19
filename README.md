@@ -23,13 +23,41 @@ Struttura dell'azienda:
 
 ### necessarie
 
-#### DB
+##### authentication
+
+- `/api/auth/login` (post)\
+    prende nel body i campi `username` e `password`\
+    restituisce `Ok(200)` con l'access token e il refresh token come cookies, altrimenti `Unauthorized(401)`
+
+- `/api/auth/refresh` (get)\
+    restituisce `Ok(200)` se il refresh token esiste ed è valido, altrimenti `Unauthorized(401)`
+
+- `/api/auth/logout` (get)\
+    restituisce `Ok(200)` con le indicazioni al browser di cancellare l'access token e il refresh token se presenti
 
 ##### products
-- create : /api/products
-//tra quadre la parte che cambia in base al record singolo o alla lista
-- update : /api/products/id
-- delete : /api/products/id
+
+per oggetto `Product` si intende un oggetto con tutti i campi della tabella products
+
+- `/api/products/` (get)\
+    restituisce `Ok(200)` con un array di oggetti `Product` che è la lista di tutti gli utenti
+
+- `/api/products/{id}` (get)\
+    restituisce `Ok(200)` con un oggetto `Product` oppure `NotFound(404)`
+
+- `/api/products/` (post)\
+    richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
+    prende campi nel body `name`, `description`, `price`, `available`\
+    restituisce `Created(201)` oppure `BadRequest(400)` se i dati non ci sono
+
+- `/api/products/` (put)\
+    richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
+    prende nel body un oggetto di tipo `Product` con tutti i suoi campi\
+    restituisce `NoContent(204)` se andato a buon fine, oppure `NotFound(404)`
+
+- `/api/products/{id}` (delete)\
+    richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
+    restituisce `NoContent(204)` se ha successo, `NotFound(404)` se non trova il product
 
 ##### photos
 
@@ -43,7 +71,7 @@ per oggetto `Photo` si intende un oggetto con tutti i campi della tabella photos
 
 - `/api/photos/upload` (post)\
     richiede il login per funzionare, dunque potrebbe tornare `Unauthorized(401)`\
-    prende nel body un oggetto di tipo `Photo` con tutti i suoi campi e un campo `photo` con il file\
+    prende nel body un oggetto con campi `title`, `originalTitle`, `year`, `place`, `description`, `state`, `price` e un campo `photo` con il file\
     warning: il campo state accetta come parametri 0 o available, 1 o booked, 2 o sold (stringhe da testare)\
     restituisce `Created(201)` oppure `BadRequest(400)` se i dati non ci sono
 
@@ -61,7 +89,7 @@ per oggetto `Photo` si intende un oggetto con tutti i campi della tabella photos
 per oggetto `User` si intende un oggetto con tutti i campi della tabella users
 
 - `/api/users/register` (post)\
-    prende campi nel body username, password, email\
+    prende campi nel body `username`, `password`, `email`\
     restituisce `Created(201)` oppure `BadRequest(400)` se i dati non ci sono
 
 - `/api/users/user` (get)\
