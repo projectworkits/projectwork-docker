@@ -52,5 +52,21 @@ CREATE TABLE photos (
     description TEXT,
     state photo_state NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    booked_by INT REFERENCES users(user_id)
+    booked_by INT REFERENCES users(user_id) ON DELETE SET NULL
 );
+
+CREATE OR REPLACE FUNCTION fn_reset_photo_state()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Controlla se booked_by è cambiato in NULL
+    IF NEW.booked_by IS NULL AND OLD.booked_by IS NOT NULL THEN
+        NEW.state := 'available';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_after_unbooking
+BEFORE UPDATE OF booked_by ON photos
+FOR EACH ROW
+EXECUTE FUNCTION fn_reset_photo_state();
