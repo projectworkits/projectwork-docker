@@ -5,9 +5,6 @@ DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
--- Create enum for photo states
-CREATE TYPE photo_state AS ENUM ('booked', 'sold', 'available');
-
 -- Create users table
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
@@ -45,6 +42,9 @@ CREATE TABLE products (
     price DECIMAL(10,2) NOT NULL
 );
 
+-- Create enum for photo states
+CREATE TYPE photo_state AS ENUM ('booked', 'sold', 'available');
+
 -- Create photos table
 CREATE TABLE photos (
     photo_id SERIAL PRIMARY KEY,
@@ -59,6 +59,8 @@ CREATE TABLE photos (
     booked_by INT REFERENCES users(user_id) ON DELETE SET NULL
 );
 
+
+-- trigger e funzione per mettere state available se booked_by va a null
 CREATE OR REPLACE FUNCTION fn_reset_photo_state()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -70,7 +72,25 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trg_after_unbooking
+CREATE TRIGGER trg_after_deleted_user
 BEFORE UPDATE OF booked_by ON photos
 FOR EACH ROW
 EXECUTE FUNCTION fn_reset_photo_state();
+
+
+-- trigger e funzione per mettere state booked se booked_by non è più null
+CREATE OR REPLACE FUNCTION fn_book_photo_state()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Controlla se booked_by è cambiato da NULL
+    IF NEW.booked_by IS NOT NULL AND OLD.booked_by IS NULL THEN
+        NEW.state := 'booked';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_after_booked_photo
+BEFORE UPDATE OF booked_by ON photos
+FOR EACH ROW
+EXECUTE FUNCTION trg_after_deleted_user();
