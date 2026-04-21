@@ -35,7 +35,6 @@ CREATE TABLE sessions (
 CREATE TABLE products (
     product_id SERIAL PRIMARY KEY,
     available INT NOT NULL,
-    booked INT NOT NULL,
     sold INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -60,37 +59,22 @@ CREATE TABLE photos (
 );
 
 
--- trigger e funzione per mettere state available se booked_by va a null
-CREATE OR REPLACE FUNCTION fn_reset_photo_state()
+CREATE OR REPLACE FUNCTION fn_update_photo_state()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Controlla se booked_by è cambiato in NULL
+    -- Se booked_by diventa NULL, imposta a available
     IF NEW.booked_by IS NULL AND OLD.booked_by IS NOT NULL THEN
         NEW.state := 'available';
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trg_after_deleted_user
-BEFORE UPDATE OF booked_by ON photos
-FOR EACH ROW
-EXECUTE FUNCTION fn_reset_photo_state();
-
-
--- trigger e funzione per mettere state booked se booked_by non è più null
-CREATE OR REPLACE FUNCTION fn_book_photo_state()
-RETURNS TRIGGER AS $$
-BEGIN
-    -- Controlla se booked_by è cambiato da NULL
-    IF NEW.booked_by IS NOT NULL AND OLD.booked_by IS NULL THEN
+    -- Se booked_by viene valorizzato (e prima era NULL), imposta a booked
+    ELSIF NEW.booked_by IS NOT NULL AND OLD.booked_by IS NULL THEN
         NEW.state := 'booked';
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trg_after_booked_photo
+-- Trigger Unico
+CREATE TRIGGER trg_manage_photo_booking
 BEFORE UPDATE OF booked_by ON photos
 FOR EACH ROW
-EXECUTE FUNCTION trg_after_deleted_user();
+EXECUTE FUNCTION fn_update_photo_state();
