@@ -243,7 +243,7 @@ per oggetto `User` si intende un oggetto con tutti i campi della tabella users
     - path:string(255),unique
     - title:string(100),unique
     - original_title:string(100),unique
-    - year:short
+    - date:string(30)
     - place:string(100)
     - description:text
     - state:enum(["booked", "sold", "available"])
