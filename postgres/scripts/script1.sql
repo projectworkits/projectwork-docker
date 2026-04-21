@@ -47,7 +47,7 @@ CREATE TABLE photos (
     path VARCHAR(255) UNIQUE NOT NULL,
     title VARCHAR(100) UNIQUE NOT NULL,
     original_title VARCHAR(100) UNIQUE NOT NULL,
-    year SMALLINT NOT NULL,
+    date VARCHAR(30) NOT NULL,
     place VARCHAR(100) NOT NULL,
     description TEXT,
     state photo_state NOT NULL,

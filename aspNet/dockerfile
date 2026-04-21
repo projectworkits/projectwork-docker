@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y git
 RUN mkdir -p /cert && chown app:app /cert
 
 RUN mkdir -p /photos && chown app:app /photos
+COPY immagini/ /frontend/photos/
 
 RUN openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes -subj "/CN=localhost"
 RUN openssl pkcs12 -export -out cert/aspnet.pfx -inkey key.pem -in cert.pem -passout pass:${CERT_PASSWORD}

@@ -58,7 +58,8 @@ services:
   # SERVIZIO 3 — PostgreSQL
   # ───────────────────────────────────────────
   postgres:
-    image: postgres:16-alpine
+    build:
+      context: ./postgres
     container_name: postgres_container
     restart: unless-stopped
  
@@ -71,8 +72,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       
-      #viene eseguito il file solo al primo avvio in assoluto del container dopo la sua creazione
-      - ./postgres/script1.sql:/docker-entrypoint-initdb.d/script1.sql
+      #vengono eseguiti i file in ordine alfabetico solo al primo avvio in assoluto del container dopo la sua creazione
+      - ./postgres/scripts/:/docker-entrypoint-initdb.d/
  
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d projectWork"]
