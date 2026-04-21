@@ -15,10 +15,14 @@ CREATE TABLE users (
     password_salt VARCHAR(50) NOT NULL, --non deve essere unique
     password_hash VARCHAR(50) NOT NULL, --non deve essere unique
     email VARCHAR(100) UNIQUE NOT NULL,
-    verified TIMESTAMP DEFAULT NULL,
     admin SMALLINT NOT NULL DEFAULT 0,
     collaborator SMALLINT NOT NULL DEFAULT 0
 );
+
+INSERT INTO users
+    (username, password_salt, password_hash, email, admin, collaborator)
+VALUES
+    ('furio', 'S7yFFxh1rcPsHADPII4gyw==', 'sdAI1Af76YlVHx/J8fySB/UD5X4/zQeRacQPiMjS5hU=', 'email@email.com', 1, 0);
 
 -- Create sessions table
 CREATE TABLE sessions (
