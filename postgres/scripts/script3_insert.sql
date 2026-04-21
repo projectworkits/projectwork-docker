@@ -22,7 +22,7 @@ INSERT INTO products (available, sold, name, description, price) VALUES
 
 (30, 0, 'Libro "Paris di Doisneau"', 'Libro fotografico dedicato agli scatti parigini più famosi.', 30.00),
 
-(150, 0, 'Sticker pack fotografico', 'Set di adesivi con varie fotografie celebri.', 5.00);
+(150, 0, 'Sticker pack fotografico', 'Set di adesivi con varie fotografie celebri.', 5.00),
 
 (110, 0, 'Taccuino fotografico', 'Taccuino con copertina illustrata da fotografie di Doisneau.', 9.50),
 
