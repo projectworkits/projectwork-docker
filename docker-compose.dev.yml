@@ -39,7 +39,7 @@ services:
     restart: unless-stopped
  
     environment:
-      ASPNETCORE_ENVIRONMENT: ${ASP_MODE}
+      ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_Kestrel__Certificates__Default__Path: /cert/aspnet.pfx
       ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERT_PASSWORD}
       ASPNETCORE_URLS: https://+:3000
